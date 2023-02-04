@@ -1,0 +1,4 @@
+wheel
+opencv-python
+openpifpaf==0.10.0
+fastdtw==0.3.4
