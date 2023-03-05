@@ -1,6 +1,6 @@
 from typing import Dict, List, Tuple
 
-from common import CocoPart, get_angle, get_intersection_point, make_360
+from main import CocoPart, get_angle, get_intersection_point, make_360
 
 TOTAL_STEPS = 3  # Number of steps in the exercise
 

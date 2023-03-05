@@ -4,10 +4,9 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-
+#body part locations in the coordinates list
 @unique
 class CocoPart(IntEnum):
-    """Body part locations in the 'coordinates' list."""
     Nose = 0
     LEye = 1
     REye = 2
@@ -43,11 +42,11 @@ def get_angle(p0: List, p1: List, p2: List) -> float:
 
     return np.degrees(np.math.atan2(np.linalg.det([v0, v1]), np.dot(v0, v1)))
 
-#Cal intersection between 2 line segments
+#Calculate the intersection between 2 line segments
 def get_intersection_point(line1: List, line2: List) -> Tuple:
     """Return the point of intersection between two lines.
 
-    Source: https://stackoverflow.com/a/42727584/7760998
+    Source: https://web.archive.org/web/20111108065352/https://www.cs.mun.ca/~rod/2500/notes/numpy-arrays/numpy-arrays.html
     """
     # Make float
     line1 = [[float(line1[0][0]), float(line1[0][1])], [float(line1[1][0]), float(line1[1][1])]]
@@ -57,7 +56,7 @@ def get_intersection_point(line1: List, line2: List) -> Tuple:
     h = np.hstack((s, np.ones((4, 1))))  # h for homogeneous
     l1 = np.cross(h[0], h[1])  # get first line
     l2 = np.cross(h[2], h[3])  # get second line
-    x, y, z = np.cross(l1, l2)  # point of intersection
+    x, y, z = np.cross(l1, l2)  # intersection point
 
     if z == 0:  # lines are parallel
         raise ValueError('lines do not intersect')

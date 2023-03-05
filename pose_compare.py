@@ -1,4 +1,4 @@
-"""Inspired from https://arxiv.org/pdf/1906.12171.pdf
+"""Motivation : https://arxiv.org/pdf/1906.12171.pdf
 
 @article{schneider2019gesture,
   title={Gesture Recognition in RGB Videos Using Human Body Keypoints and Dynamic Time Warping},
@@ -21,7 +21,7 @@ from scipy.ndimage.filters import gaussian_filter
 from scipy.signal import medfilt
 from scipy.spatial.distance import euclidean
 
-from common import CocoPart
+from main import CocoPart
 
 
 def load_csv(csv_fp: str) -> List:
@@ -53,17 +53,17 @@ def load_csv(csv_fp: str) -> List:
             # TODO: Figure out a way to handle missing joints
             coordinates = []  # List to store XY coordinates of every joint
 
-            # Fill up the coordinate list for a single frame
+            # Fill the coordinate list for a single frame
             for index in range(1, len(row), 3):  # Starting from 1 to skip frame column, 3 because joint.x|y|prob
                 coordinates.append([float(row[index]), float(row[index + 1])])
 
-            # Fill up the final list with coordinate lists of all the frames
+            # Fill the final list with coordinate lists of all the frames
             pose_coordinates.append(coordinates)
 
     return pose_coordinates
 
 
-def normalise(all_coordinates: List) -> List:
+def normalize(all_coordinates: List) -> List:
     """The normalization is a simple coordinate transformation done in two steps:
 
     1. Translation: All the key points are translated such that the nose key point becomes the origin of the coordinate
@@ -92,7 +92,7 @@ def normalise(all_coordinates: List) -> List:
 
     return norm_coords
 
-
+#Filter indices 
 def dimension_selection(frames: List) -> List:
     """Remove indices that don't vary a lot during the pose.
 
@@ -103,7 +103,7 @@ def dimension_selection(frames: List) -> List:
     :returns: A set of indices of dimensions that should be kept
     """
 
-    def keep_sequence(seq: List) -> bool:
+    def keep_sequence(seq: List) -> bool:   
         """Check whether the points in the sequence vary a lot or not."""
         # Use a median filter for smoothing
         seq = medfilt(seq, kernel_size=3)
@@ -120,9 +120,8 @@ def dimension_selection(frames: List) -> List:
 
     return dimensions
 
-
+# Calculate how similar the two pose sequences are."""
 def calculate_score(seq1: List, seq2: List, dimensions: List) -> float:
-    """Calculate how similar the two pose sequences are."""
 
     def process_signal(signal: List) -> List:
         """Final processing before dynamic time warping."""
@@ -158,8 +157,8 @@ def main():
     pose2 = load_csv(csv_fp=pose_csv2)
 
     # Normalization
-    pose1 = normalise(pose1)
-    pose2 = normalise(pose2)
+    pose1 = normalize(pose1)
+    pose2 = normalize(pose2)
 
     # Dimension Selection
     pose1_dimensions = dimension_selection(pose1.copy())

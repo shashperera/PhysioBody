@@ -1,6 +1,6 @@
 from typing import Dict, List, Tuple
 
-from common import CocoPart, get_angle
+from main import CocoPart, get_angle
 
 TOTAL_STEPS = 3  # Number of steps in the exercise
 

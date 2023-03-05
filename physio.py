@@ -10,18 +10,18 @@ import numpy as np
 import openpifpaf
 import torch
 
-from common import CocoPart, SKELETON_CONNECTIONS, write_on_image
-from exercises import do_left_heel_slides, do_seated_right_knee_extension, do_side_lying_left_leg_lift, LHS_TOTAL, \
-    SRKE_TOTAL, SLLLL_TOTAL
-from processor import Processor
+from main import CocoPart, SKELETON_CONNECTIONS, write_on_image
+from exercises import do_left_heel_slides, do_seated_right_knee_extension, do_seated_left_knee_extension, do_side_lying_left_leg_lift, LHS_TOTAL, \
+    SRKE_TOTAL, SLKE_TOTAL, SLLLL_TOTAL
+from keypointprocessor import Processor
 
-
+#Command lines
 def cli():
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    # TODO: Verify the args since they were changed in v0.10.0
+    # Need to verify the args due to version issues in v0.10.0
     openpifpaf.decoder.cli(parser, force_complete_pose=True,
                            instance_threshold=0.2, seed_threshold=0.5)
     openpifpaf.network.nets.cli(parser)
@@ -144,6 +144,10 @@ def main():
             'func': do_seated_right_knee_extension,
             'steps': SRKE_TOTAL
         },
+        'seated_left_knee_extension': {
+            'func': do_seated_right_knee_extension,
+            'steps': SLKE_TOTAL
+        },
         'side_lying_left_leg_lift': {
             'func': do_side_lying_left_leg_lift,
             'steps': SLLLL_TOTAL
@@ -151,7 +155,7 @@ def main():
     }
     args = cli()
 
-    # Check video source
+    # Choose video source
     if args.video is None:
         logging.debug('Video source: webcam')
         cam = cv2.VideoCapture(0)
@@ -159,7 +163,7 @@ def main():
         logging.debug(f'Video source: {args.video}')
         cam = cv2.VideoCapture(args.video)
 
-    # Setup CSV file with keypoints
+    # Setup CSV file
     with open(args.csv_path, mode='w') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(['frame_no',
@@ -195,7 +199,7 @@ def main():
         return
 
     exercise_func = exercises[args.exercise]['func']
-    current_step = 0
+    cur_step = 0
     total_steps = exercises[args.exercise]['steps']
 
     width_height = (int(width * args.resolution // 16) * 16 + 1, int(height * args.resolution // 16) * 16 + 1)
@@ -241,11 +245,11 @@ def main():
 
         write_to_csv(frame_number=frame, humans=keypoint_sets, width=width, height=height, csv_fp=args.csv_path)
 
-        temp_step, mess = exercise_func(keypoint_sets, current_step)
+        temp_step, mess = exercise_func(keypoint_sets, cur_step)
 
         # No need to change cur_step when prerequisites are not met
         if temp_step != -1:
-            current_step = temp_step
+            cur_step = temp_step
 
         img = write_on_image(img=img, text=mess, color=[0, 0, 0])
 
@@ -263,7 +267,7 @@ def main():
 
         cv2.imshow('You', img)
 
-        if current_step == total_steps:
+        if cur_step == total_steps:
             task_finished = True
             continue
 

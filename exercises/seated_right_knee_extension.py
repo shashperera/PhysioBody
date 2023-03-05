@@ -1,6 +1,6 @@
 from typing import Dict, List, Tuple
 
-from common import CocoPart, get_angle, make_360
+from main import CocoPart, get_angle, make_360
 
 TOTAL_STEPS = 3  # Number of steps in the exercise
 
@@ -18,14 +18,15 @@ def do_seated_right_knee_extension(humans: List, current_step: int) -> Tuple[int
     if not satisfies:
         return -1, err_mess
 
-    new_step, mess = perform_step(human=humans[0], current_step=current_step)
+    new_step, mess = perform_step(human=humans[0], curr_step=current_step)
 
     return new_step, mess
 
 
-def perform_step(human: Dict, current_step: int) -> Tuple[int, str]:
+def perform_step(human: Dict, curr_step: int) -> Tuple[int, str]:
     """
     Steps:
+    
     1. Right leg should be in a seated position, i.e., making an inner angle in range (120, 150).
     2. Extend the right leg such that the inner angle is more than 180.
     3. Bring the right leg back to the starting position.
@@ -38,31 +39,31 @@ def perform_step(human: Dict, current_step: int) -> Tuple[int, str]:
                       p1=[right_knee[0], 1 - right_knee[1]],
                       p2=[right_hip[0], 1 - right_hip[1]])
 
-    if current_step == 0:
+    if curr_step == 0:
         if 120 < angle < 150:
-            return current_step + 1, 'Initial position set\nSlowly extend the right leg'
+            return curr_step + 1, 'Initial position set\nSlowly extend the right leg'
 
-        return current_step, 'Move right leg to seating position'
+        return curr_step, 'Move right leg to seating position'
 
-    elif current_step == 1:
+    elif curr_step == 1:
         if 120 < angle < 150:
-            return current_step, 'Initial position set\nSlowly extend the right leg'
+            return curr_step, 'Initial position set\nSlowly extend the right leg'
 
-        if make_360(angle=angle) >= 180:
-            return current_step + 1, 'Extension limit reached\nSlowly lower right leg'
+        if make_360(angle=angle) >= 150:
+            return curr_step + 1, 'Extension limit reached\nSlowly lower right leg'
 
-        return current_step, 'Continue extending the right leg'
+        return curr_step, 'Continue extending the right leg'
 
-    elif current_step == 2:
-        if make_360(angle=angle) >= 180:
-            return current_step, 'Extension limit reached\nSlowly lower right leg'
+    elif curr_step == 2:
+        if make_360(angle=angle) >= 150:
+            return curr_step, 'Extension limit reached\nSlowly lower right leg'
 
         if 0 < angle < 150:
-            return current_step + 1, 'Right leg back in starting position'
+            return curr_step + 1, 'Right leg back in starting position'
 
-        return current_step, 'Continue lowering the right leg'
+        return curr_step, 'Continue lowering the right leg'
 
-    return current_step, ''
+    return curr_step, ''
 
 
 def satisfies_prerequisites(humans: List) -> Tuple[bool, str]:
@@ -99,6 +100,6 @@ def satisfies_prerequisites(humans: List) -> Tuple[bool, str]:
                       p2=[left_hip[0], 1-left_hip[1]])
 
     if not (90 <= int(angle) <= 150):
-        return False, 'Left leg not seated'
+        return False, 'Best done sitting in a chair. Bend the knee as far as possible and hold for 5sec then straighten as far as possible or bring back to start position. Slowly the range will improve. Left leg not seated'
 
     return True, 'Satisfies'
