@@ -22,7 +22,7 @@ python physio.py --exercise side_lying_left_leg_lift --joints --skeleton --save-
 #Uploaded videos
     python physio.py --video results.avi --csv-path results.csv #you need 2 videos. Run pose estimation using physio.py on both the videos and save their CSV results
     python physio.py --video SRKE45t.mp4 --joints --skeleton --save-output
-    python pose_compare.py video1.csv video2.csv #To calculate how similar the 2 poses run this & output a decimal number. The lower the better.
+    python pose_compare.py check1.csv check2.csv #To calculate how similar the 2 poses run this & output a decimal number. The lower the better.
 
 
 ```

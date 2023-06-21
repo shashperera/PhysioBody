@@ -62,7 +62,7 @@ def load_csv(csv_fp: str) -> List:
 
     return pose_coordinates
 
-
+#Translation and scaling
 def normalize(all_coordinates: List) -> List:
     """The normalization is a simple coordinate transformation done in two steps:
 
@@ -75,7 +75,7 @@ def normalize(all_coordinates: List) -> List:
     """
     norm_coords = []  # Hold the normalised coordinates for every frame
 
-    # Iterate over every frame
+    # Iterating over every frame
     for coordinates in all_coordinates:
         # Step 1: Translate
         coordinates = [
@@ -172,3 +172,13 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# import numpy as np
+# from scipy.spatial.distance import euclidean
+
+# from fastdtw import fastdtw
+
+# x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
+# y = np.array([[2,2], [3,3], [4,4]])
+# distance, path = fastdtw(x, y, dist=euclidean)
+# print(distance)
