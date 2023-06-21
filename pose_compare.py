@@ -1,12 +1,3 @@
-"""Motivation : https://arxiv.org/pdf/1906.12171.pdf
-
-@article{schneider2019gesture,
-  title={Gesture Recognition in RGB Videos Using Human Body Keypoints and Dynamic Time Warping},
-  author={Schneider, Pascal and Memmesheimer, Raphael and Kramer, Ivanna and Paulus, Dietrich},
-  journal={arXiv preprint arXiv:1906.12171},
-  year={2019}
-}
-"""
 import csv
 import math
 import sys
