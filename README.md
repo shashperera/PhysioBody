@@ -1,11 +1,14 @@
 # PhysiBody
 
-# Setup
+## Demo
+![Demo](https://github.com/shashperera/PhysioBody/assets/40666122/db3a25ac-6c2f-4e43-a981-471c08a5aef7)
+
+## Setup
 ```shell script
 pip install -r requirements.txt
 ```
 
-# Run
+## How to Run
 ```shell script
 Open anaconda prompt
 cd Downloads\physiobody-master\physiobody
@@ -27,7 +30,7 @@ python physio.py --exercise side_lying_left_leg_lift --joints --skeleton --save-
 
 ```
 
-# Flow
+## Flow
 
 Starts by evaluating the movement of the joints. 
 1.	First ensure that all of the needed joints have been identified and are visible in the frame. 
@@ -42,19 +45,6 @@ The application provides guidelines for the user and follows the same directions
 3.	Then waits for the user to extend and straighten the leg.
 4.	Next waits for the user to return the leg to the beginning position. 
 5.	Also the application gives the user useful output throughout each of the waiting times. For example, if the leg is not in the starting position, directs it to be so.
-
-| Flow | Starts by evaluating the movement of the joints. 
-1.	First ensure that all of the needed joints have been identified and are visible in the frame. 
-2.	The user is then instructed to return to the beginning point.
-3.	User is then instructed to complete the remaining steps in the activity. 
-4.	The feedback is given based on the angle formed by the keypoints covered. |
-| Application Guideline | The application provides guidelines for the user and follows the same directions - Ex: Seated Right Knee Extension
-
-1.	Check whether the keypoints are visible.
-2.	Next waits for the user to move the right leg in the seated posture. 
-3.	Then waits for the user to extend and straighten the leg.
-4.	Next waits for the user to return the leg to the beginning position. 
-5.	Also the application gives the user useful output throughout each of the waiting times. For example, if the leg is not in the starting position, directs it to be so. |
 
 
 
