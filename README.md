@@ -1,4 +1,4 @@
-# PhysiBody
+# PhysioBody
 Physiotherapy Rehabilitation Exercise Recommendation System with Human Pose Estimation
 ## Demo
 ![Demo](https://github.com/shashperera/PhysioBody/assets/40666122/db3a25ac-6c2f-4e43-a981-471c08a5aef7)
