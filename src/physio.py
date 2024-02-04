@@ -10,18 +10,18 @@ import numpy as np
 import openpifpaf
 import torch
 
-from common import CocoPart, SKELETON_CONNECTIONS, write_on_image
-from exercises import do_left_heel_slides, do_seated_right_knee_extension, do_side_lying_left_leg_lift, LHS_TOTAL, \
-    SRKE_TOTAL, SLLLL_TOTAL
-from processor import Processor
+from main import CocoPart, SKELETON_CONNECTIONS, write_on_image
+from exercises import do_left_heel_slides, do_seated_right_knee_extension, do_seated_left_knee_extension, do_side_lying_left_leg_lift, LHS_TOTAL, \
+    SRKE_TOTAL, SLKE_TOTAL, SLLLL_TOTAL
+from PhysioBody.src.keypointprocessor import Processor
 
-
+#Command lines
 def cli():
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    # TODO: Verify the args since they were changed in v0.10.0
+    # Need to verify the args due to version issues in v0.10.0
     openpifpaf.decoder.cli(parser, force_complete_pose=True,
                            instance_threshold=0.2, seed_threshold=0.5)
     openpifpaf.network.nets.cli(parser)
@@ -143,6 +143,10 @@ def main():
         'seated_right_knee_extension': {
             'func': do_seated_right_knee_extension,
             'steps': SRKE_TOTAL
+        },
+        'seated_left_knee_extension': {
+            'func': do_seated_right_knee_extension,
+            'steps': SLKE_TOTAL
         },
         'side_lying_left_leg_lift': {
             'func': do_side_lying_left_leg_lift,
